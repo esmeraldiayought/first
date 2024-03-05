@@ -4,10 +4,10 @@ public class Calculator {
 
     private double num1;
     private double num2;
-    private char operation1;
+    private String operation1;
     // private Object Input;
 
-    public static void Input() {
+    public void Input() throws Exception {
 
         Scanner in = new Scanner(System.in);
 
@@ -15,57 +15,63 @@ public class Calculator {
         String str = in.nextLine();
         // in.close();
 
-        String[] parts = str.split(" ");
-        String num1, operation1, num2;
-        num1 = parts[0];
-        operation1 = parts[1];
-        num2 = parts[2];
-
         in.close();
-    }
 
-    public double calculate() {
+        String[] parts = str.split(" ");
+        String numstr1 = parts[0];
+        String numstr2 = parts[2];
+        operation1 = parts[1];
 
-        double result = 0.0;
-        switch (operation1) {
-
-            case '+':
-                result = num1 + num2;
-                // System.out.println("Решение = " + result1);
-                break;
-            case '-':
-                result = num1 - num2;
-                // System.out.println("Решение = " + result2);
-                break;
-            case '*':
-                result = num1 * num2;
-                // System.out.println("Решение = " + result3);
-                break;
-            case '/':
-                if (num2 == 0) {
-                    System.out.print("Взрыв четвертого энергоблока не производим.");
-                } else {
-                    result = num1 / num2;
-                    // System.out.println("Решение = " + result4);
-                    break;
-                }
-            default: {
-                System.out.print("Отсутсвие операнда.");
-                break;
-            }
+        try {
+            num1 = Double.parseDouble(numstr1);
+            num2 = Double.parseDouble(numstr2);
+        } catch (NumberFormatException e) {
+            // System.out.print("Не число.");
+            throw new Exception("Не число");
         }
-        return result;
+
     }
 
-    public void Output(double result) {
-        System.out.println("Решение = " + result); // переписать красивенько
+    public double plus() {
+        return num1 + num2;
     }
 
-    public static void main(String[] args) {
-        Calculator calculator = new Calculator();
-        calculator.Input;
-        double result = calculator.calculate();
-        
-        calculator.Output(result);
+    public double minus() {
+        return num1 - num2;
     }
+
+    public double proizv() {
+        return num1 * num2;
+    }
+
+    public double delen() {
+        if (num2 == 0) {
+            System.out.print("Взрыв четвертого энергоблока не производим.");
+            return 1;
+        } else {
+            return num1 / num2;
+        }
+    }
+
+    public void Output() {
+
+        switch (operation1) {
+            case "+":
+                System.out.println("Решение = " + plus());
+                break;
+            case "-":
+                System.out.println("Решение = " + minus());
+                break;
+            case "*":
+                System.out.println("Решение = " + proizv());
+                break;
+            case "/":
+                System.out.println("Решение = " + delen());
+                break;
+            default:
+                System.out.println("Неверный операнд.");
+                break;
+        }
+    }
+
 }
